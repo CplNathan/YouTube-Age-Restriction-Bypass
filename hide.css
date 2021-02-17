@@ -1,0 +1,11 @@
+.hideplayer {
+    display: none;
+}
+
+.ytd-watch-flexy {
+    visibility:unset !important;
+}
+
+#movie_player_fake {
+    visibility:unset !important;
+}

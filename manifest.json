@@ -1,0 +1,29 @@
+{
+    "name": "Youtube Native Proxy",
+    "version": "1.0",
+    "description": "",
+    "manifest_version": 2,
+    "permissions": [
+        "tabs",
+        "*://*.youtube.com/*"
+    ],
+    "web_accessible_resources": [
+        "payload_end.js"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.youtube.com/embed*",
+                "*://*.youtube.com/watch*"
+            ],
+            "run_at": "document_end",
+            "all_frames": true,
+            "js": [
+                "injector_end.js"
+            ],
+            "css": [
+                "hide.css"
+            ]
+        }
+    ]
+}
