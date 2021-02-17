@@ -3,7 +3,7 @@ Bypasses YouTube content restriction in the EU negating the need to provide iden
  
 This project uses `youtubedl` accessed through a web API to download videos and serve them through a custom CDN. The content is then played seamlessly through the browser plugin replacing the original YouTube player with a HTML5 player containing the restricted content.
 
-### Browser Plugin
+#### Browser Plugin
 The browser plugin is an unpacked extension built for Chrome and Chromium based browsers that has also been tested with Firefox, similarly this plugin can also be adapted to work with Tampermonkey.
 
 #### Web API
