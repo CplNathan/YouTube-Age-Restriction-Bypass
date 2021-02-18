@@ -1,5 +1,5 @@
 {
-    "name": "Youtube Native Proxy",
+    "name": "YouTube Age Restriction Bypass",
     "version": "1.0",
     "description": "",
     "manifest_version": 2,
@@ -10,6 +10,10 @@
     "web_accessible_resources": [
         "payload_end.js"
     ],
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
     "content_scripts": [
         {
             "matches": [

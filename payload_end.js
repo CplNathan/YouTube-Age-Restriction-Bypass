@@ -51,7 +51,7 @@ function runBypass() {
                         setElementHide(document.getElementsByClassName('ytp-error')[0], true)
                         setElementHide(document.getElementById("movie_player"), true)
 
-                        fetch('https://example.com/?id=' + playerElement.getVideoData().video_id, {
+                        fetch(downloadServerURL + '?id=' + playerElement.getVideoData().video_id, {
                             mode: 'cors'
                         }).then(result => result.json()).then(result => {
                             var container = document.querySelector('div.ytd-player')
@@ -75,6 +75,39 @@ function runBypass() {
                             playerContent.appendChild(playerFrame)
 
                             overriddenVideo = videoPlayer
+                        }).catch(function () {
+                            // Pain
+                            var container = document.querySelector('div.ytd-player')
+
+                            var playerContent = document.createElement('yt-player-error-message-renderer')
+                            playerContent.className = "style-scope yt-playability-error-supported-renderers"
+
+                            var errorFrame = window.document.createElement("div")
+                            errorFrame.setAttribute("id", "info")
+                            errorFrame.className = "style-scope yt-player-error-message-renderer"
+
+                            {
+                                var errorReason = window.document.createElement("div")
+                                errorReason.setAttribute("id", "reason")
+                                errorReason.className = "style-scope yt-player-error-message-renderer"
+                                errorReason.innerHTML = "Download server error"
+
+                                var errorSubReason = window.document.createElement("yt-formatted-string")
+                                errorSubReason.setAttribute("id", "subreason")
+                                errorSubReason.className = "style-scope yt-player-error-message-renderer"
+                                var errorSubReasonSpan = window.document.createElement("span")
+                                errorSubReasonSpan.setAttribute("dir", "auto")
+                                errorSubReasonSpan.className = "style-scope yt-formatted-string"
+                                errorSubReasonSpan.innerHTML = "There was an error downloading the video from the server intended to bypass content restrictions, please check your URL is valid in the extension options and that the server is online."
+                            }
+
+                            container.appendChild(playerContent)
+                            playerContent.appendChild(errorFrame)
+                            errorFrame.appendChild(errorReason)
+                            errorFrame.appendChild(errorSubReason)
+                            errorSubReason.appendChild(errorSubReasonSpan)
+
+                            overriddenVideo = playerContent
                         })
                     }
                 })
