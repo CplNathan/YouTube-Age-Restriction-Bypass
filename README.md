@@ -7,4 +7,5 @@ This project uses `youtubedl` accessed through a web API to download videos and 
 The browser plugin is an unpacked extension built for Chrome and Chromium based browsers that has also been tested with Firefox, similarly this plugin can also be adapted to work with Tampermonkey.
 
 #### Web API
-The API is not bundled with this repository however I will include it in a separate repository in the near future.
+The API can be found in a seperate repository and works in combination with the browser extension to download and share restricted videos.
+https://github.com/CplNathan/YouTube-Age-Restriction-Bypass-Server
