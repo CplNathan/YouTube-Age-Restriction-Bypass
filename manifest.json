@@ -5,6 +5,7 @@
     "manifest_version": 2,
     "permissions": [
         "tabs",
+        "storage",
         "*://*.youtube.com/*"
     ],
     "web_accessible_resources": [
