@@ -1,7 +1,3 @@
-function removeNode(n) {
-    if (n != null) n.parentNode.removeChild(n)
-}
-
 function setElementHide(n, state) {
     if (n != null) {
         if (state) {
@@ -43,46 +39,45 @@ function runBypass() {
         overriddenVideo.remove()
     }
 
-    let playerpage = (location.pathname.startsWith('/watch') || location.pathname.startsWith('/embed'))
-    if (playerpage) {
+    let isWatchPage = (location.pathname.startsWith('/watch') || location.pathname.startsWith('/embed'))
+    if (isWatchPage) {
         waitForNodeId('movie_player', function () {
             waitForNodeId('player-container', function () {
-                let player = document.getElementById("movie_player")
-                let watch = playerpage && (player.getPlayerState() == -1 || player.getPlayerState() == 3)
-                if (watch) {
-                    setElementHide(document.getElementById('error-screen'), true)
-                    setElementHide(document.getElementsByClassName('ytp-error')[0], true)
-                    setElementHide(document.getElementById("movie_player"), true)
+                waitForNodeId('container', function () {
+                    let playerElement = document.getElementById("movie_player")
+                    let isRestricted = isWatchPage && playerElement.getPlayerState() == -1
+                    if (isRestricted) {
+                        setElementHide(document.getElementById('error-screen'), true)
+                        setElementHide(document.getElementsByClassName('ytp-error')[0], true)
+                        setElementHide(document.getElementById("movie_player"), true)
 
-                    waitForNodeId('container', function () {
-                        fetch('https://example.com/?id=' + player.getVideoData().video_id, {
+                        fetch('https://example.com/?id=' + playerElement.getVideoData().video_id, {
                             mode: 'cors'
                         }).then(result => result.json()).then(result => {
                             var container = document.querySelector('div.ytd-player')
 
-                            var videoplayer = document.createElement('div')
-                            videoplayer.className = "html5-video-player ytp-transparent ytp-hide-info-bar ytp-large-width-mode iv-module-loaded paused-mode"
+                            var videoPlayer = document.createElement('div')
+                            videoPlayer.className = "html5-video-player ytp-transparent ytp-hide-info-bar ytp-large-width-mode iv-module-loaded paused-mode"
 
-                            var playercontent = document.createElement('div')
-                            playercontent.className = "ytp-player-content ytp-iv-player-content"
+                            var playerContent = document.createElement('div')
+                            playerContent.className = "ytp-player-content ytp-iv-player-content"
 
-                            var playerframe = window.document.createElement("iframe")
-                            playerframe.setAttribute("src", result.url)
-                            playerframe.setAttribute("id", "movie_player_fake")
-                            playerframe.setAttribute("frameBorder", "0")
-                            playerframe.setAttribute("width", "100%")
-                            playerframe.setAttribute("height", "100%")
-                            playerframe.setAttribute("allowfullscreen", true)
+                            var playerFrame = window.document.createElement("iframe")
+                            playerFrame.setAttribute("src", result.url)
+                            playerFrame.setAttribute("id", "movie_player_fake")
+                            playerFrame.setAttribute("frameBorder", "0")
+                            playerFrame.setAttribute("width", "100%")
+                            playerFrame.setAttribute("height", "100%")
+                            playerFrame.setAttribute("allowfullscreen", true)
 
-                            container.appendChild(videoplayer)
-                            videoplayer.appendChild(playercontent)
-                            playercontent.appendChild(playerframe)
+                            container.appendChild(videoPlayer)
+                            videoPlayer.appendChild(playerContent)
+                            playerContent.appendChild(playerFrame)
 
-                            overriddenVideo = videoplayer
-                            console.log("injected new video")
+                            overriddenVideo = videoPlayer
                         })
-                    })
-                }
+                    }
+                })
             })
         })
     }
