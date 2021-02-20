@@ -9,10 +9,10 @@
         "*://*.youtube.com/*"
     ],
     "web_accessible_resources": [
-        "payload_end.js"
+        "payload_start.js"
     ],
     "options_ui": {
-        "page": "options.html",
+        "page": "html/options/options.html",
         "open_in_tab": false
     },
     "content_scripts": [
@@ -24,10 +24,10 @@
             "run_at": "document_start",
             "all_frames": true,
             "js": [
-                "injector_end.js"
+                "injector_start.js"
             ],
             "css": [
-                "hide.css"
+                "css/hide.css"
             ]
         }
     ]
