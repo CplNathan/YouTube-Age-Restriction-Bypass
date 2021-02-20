@@ -21,7 +21,7 @@
                 "*://*.youtube.com/embed*",
                 "*://*.youtube.com/watch*"
             ],
-            "run_at": "document_end",
+            "run_at": "document_start",
             "all_frames": true,
             "js": [
                 "injector_end.js"
