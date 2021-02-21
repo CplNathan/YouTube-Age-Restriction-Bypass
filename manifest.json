@@ -9,7 +9,11 @@
         "*://*.youtube.com/*"
     ],
     "web_accessible_resources": [
-        "payload_start.js"
+        "payload_start.js",
+        "html/youtube/errormessage.html",
+        "html/youtube/loadingmessage.html",
+        "html/youtube/fakeplayer.html",
+        "html/options/options.html"
     ],
     "options_ui": {
         "page": "html/options/options.html",
@@ -27,7 +31,8 @@
                 "injector_start.js"
             ],
             "css": [
-                "css/hide.css"
+                "css/hide.css",
+                "css/youtube.css"
             ]
         }
     ]

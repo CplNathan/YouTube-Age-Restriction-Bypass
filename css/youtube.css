@@ -1,0 +1,105 @@
+yt-player-error-message-renderer-fake.yt-playability-error-supported-renderers, yt-player-kav-renderer.yt-playability-error-supported-renderers {
+    width: 100%;
+    height: 100%;
+    -ms-flex: var(--layout-flex-none_-_-ms-flex);
+    -webkit-flex: var(--layout-flex-none_-_-webkit-flex);
+    flex: var(--layout-flex-none_-_flex);
+}
+
+yt-player-error-message-renderer-fake {
+    display: block;
+    overflow: hidden;
+    -ms-flex: var(--layout-flex_-_-ms-flex);
+    -webkit-flex: var(--layout-flex_-_-webkit-flex);
+    flex: var(--layout-flex_-_flex);
+    -webkit-flex-basis: var(--layout-flex_-_-webkit-flex-basis);
+    flex-basis: var(--layout-flex_-_flex-basis);
+    display: var(--layout-horizontal_-_display, block);
+    -ms-flex-direction: var(--layout-horizontal_-_-ms-flex-direction);
+    -webkit-flex-direction: var(--layout-horizontal_-_-webkit-flex-direction);
+    flex-direction: var(--layout-horizontal_-_flex-direction);
+    -ms-flex-align: var(--layout-center-center_-_-ms-flex-align);
+    -webkit-align-items: var(--layout-center-center_-_-webkit-align-items);
+    align-items: var(--layout-center-center_-_align-items);
+    -ms-flex-pack: var(--layout-center-center_-_-ms-flex-pack);
+    -webkit-justify-content: var(--layout-center-center_-_-webkit-justify-content);
+    justify-content: var(--layout-center-center_-_justify-content);
+}
+
+yt-icon-fake.yt-player-error-message-renderer {
+    --iron-icon-fill-color: var(--yt-white-opacity-lighten-2);
+    -ms-flex: var(--layout-flex-none_-_-ms-flex);
+    -webkit-flex: var(--layout-flex-none_-_-webkit-flex);
+    flex: var(--layout-flex-none_-_flex);
+    height: 144px;
+    width: 144px;
+}
+
+yt-icon-fake, .yt-icon-container.yt-icon {
+    display: -ms-inline-flexbox;
+    display: -webkit-inline-flex;
+    display: inline-flex;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    position: relative;
+    vertical-align: middle;
+    fill: var(--iron-icon-fill-color, currentcolor);
+    stroke: var(--iron-icon-stroke-color, none);
+    width: var(--iron-icon-width, 24px);
+    height: var(--iron-icon-height, 24px);
+    margin-left: var(--iron-icon_-_margin-left);
+    margin-bottom: var(--iron-icon_-_margin-bottom);
+    margin-right: var(--iron-icon_-_margin-right);
+    width: var(--iron-icon_-_width, var(--iron-icon-width, 24px));
+    height: var(--iron-icon_-_height, var(--iron-icon-height, 24px));
+    margin-top: var(--iron-icon_-_margin-top);
+}
+
+yt-formatted-string-fake::-webkit-scrollbar {
+    width: var(--ytd-scrollbar-width);
+}
+yt-formatted-string-fake::-webkit-scrollbar-thumb {
+    height: var(--ytd-scrollbar-scrubber_-_height);
+    background: var(--ytd-scrollbar-scrubber_-_background);
+}
+
+yt-button-renderer-fake.style-white-with-border[is-paper-button] {
+    background-color: transparent;
+    border: 1px solid var(--yt-spec-static-brand-white);
+    color: var(--yt-spec-static-brand-white);
+}
+
+yt-button-renderer-fake.yt-player-error-message-renderer {
+    margin: var(--ytd-margin-4x) var(--ytd-margin-3x) 0 0;
+}
+yt-button-renderer-fake[is-paper-button] {
+    border-radius: var(--yt-button-border-radius, 3px);
+    margin: var(--yt-button-margin, 0 0.29em);
+}
+yt-button-renderer-fake[is-paper-button] {
+    background-color: var(--yt-basic-background-color, var(--yt-button-background-color));
+    color: var(--yt-basic-foreground-title-color, var(--yt-spec-text-secondary));
+    border-color: var(--yt-basic-foreground-title-color, var(--yt-spec-text-secondary));
+}
+yt-button-renderer-fake {
+    display: inline-block;
+    text-transform: uppercase;
+}
+yt-button-renderer-fake {
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: var(--ytd-tab-system_-_font-size);
+    font-weight: var(--ytd-tab-system_-_font-weight);
+    letter-spacing: var(--ytd-tab-system_-_letter-spacing);
+    text-transform: var(--ytd-tab-system_-_text-transform);
+}
+yt-button-renderer-fake {
+    --paper-button-ink-color: var(--yt-paper-button-ink-color);
+    --yt-formatted-string-deemphasize-color: var(--yt-spec-static-brand-white);
+    --yt-formatted-string-deemphasize_-_margin-left: var(--ytd-margin-base);
+    --yt-formatted-string-deemphasize_-_display: initial;
+}

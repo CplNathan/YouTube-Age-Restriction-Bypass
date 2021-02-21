@@ -1,3 +1,8 @@
+function requestAgeRestrictionBypassSettingsOpen() {
+    window.dispatchEvent(new CustomEvent('requestAgeRestrictionBypassSettingsOpen', {}));
+    return true;
+}
+
 {
     function setElementHide(n, state) {
         if (n != null) {
@@ -19,6 +24,13 @@
         }, 100, node, cb)
     }
 
+    function removeLoadingPage() {
+        if (loadingPage != null) {
+            loadingPage.remove()
+            loadingPage = null
+        }
+    }
+
     window.addEventListener('yt-navigate-finish', function () {
         runBypass()
     })
@@ -29,18 +41,26 @@
     })();
 
     let overriddenVideo = null
+    let loadingPage = null
     const downloadURL = document.currentScript.getAttribute('data-url');
+    const errorURL = document.currentScript.getAttribute('data-errorurl')
+    const loadingURL = document.currentScript.getAttribute('data-loadingurl')
+    const playerURL = document.currentScript.getAttribute('data-playerurl')
 
     function runBypass() {
         if (overriddenVideo != null) {
             console.log('Navigating away from page, removing iframe')
 
+            setElementHide(document.getElementsByTagName('yt-player-error-message-renderer')[0], false)
             setElementHide(document.getElementById('error-screen'), false)
             setElementHide(document.getElementsByClassName('ytp-error')[0], false)
             setElementHide(document.getElementById('movie_player'), false)
 
             overriddenVideo.remove()
+            overriddenVideo = null
         }
+
+        removeLoadingPage()
 
         let isWatchPage = (location.pathname.startsWith('/watch') || location.pathname.startsWith('/embed'))
         if (isWatchPage) {
@@ -50,65 +70,43 @@
                         let playerElement = document.getElementById('movie_player')
                         let isRestricted = isWatchPage && playerElement.getPlayerState() == -1
                         if (isRestricted) {
-                            setElementHide(document.getElementById('error-screen'), true)
+                            setElementHide(document.getElementsByTagName('yt-player-error-message-renderer')[0], true)
                             setElementHide(document.getElementsByClassName('ytp-error')[0], true)
                             setElementHide(document.getElementById('movie_player'), true)
+
+                            fetch(loadingURL).then(function (response) {
+                                return response.text();
+                            }).then(function (data) {
+                                let container = document.getElementsByTagName('yt-player-error-message-renderer')[0]
+                                container.insertAdjacentHTML('beforebegin', data);
+                                loadingPage = document.getElementById('loading-fake')
+                            });
 
                             fetch(downloadURL + '?id=' + playerElement.getVideoData().video_id, {
                                 mode: 'cors'
                             }).then(result => result.json()).then(result => {
-                                let container = document.querySelector('div.ytd-player')
+                                setElementHide(document.getElementById('error-screen'), true)
 
-                                let videoPlayer = document.createElement('div')
-                                videoPlayer.className = 'html5-video-player ytp-transparent ytp-hide-info-bar ytp-large-width-mode iv-module-loaded paused-mode'
+                                fetch(playerURL).then(function (response) {
+                                    return response.text();
+                                }).then(function (data) {
+                                    let container = document.querySelector('div.ytd-player')
+                                    container.insertAdjacentHTML('beforebegin', data);
+                                    document.getElementById('movie_player_fake').setAttribute('src', result.url)
+                                    overriddenVideo = document.getElementById('player-fake')
 
-                                let playerContent = document.createElement('div')
-                                playerContent.className = 'ytp-player-content ytp-iv-player-content'
-
-                                let playerFrame = window.document.createElement('iframe')
-                                playerFrame.setAttribute('src', result.url)
-                                playerFrame.setAttribute('id', 'movie_player_fake')
-                                playerFrame.setAttribute('frameBorder', '0')
-                                playerFrame.setAttribute('width', '100%')
-                                playerFrame.setAttribute('height', '100%')
-                                playerFrame.setAttribute('allowfullscreen', true)
-
-                                container.appendChild(videoPlayer)
-                                videoPlayer.appendChild(playerContent)
-                                playerContent.appendChild(playerFrame)
-
-                                overriddenVideo = videoPlayer
+                                    removeLoadingPage()
+                                });
                             }).catch(function () {
-                                // Pain
-                                let container = document.querySelector('div.ytd-player')
+                                fetch(errorURL).then(function (response) {
+                                    return response.text();
+                                }).then(function (data) {
+                                    let container = document.getElementsByTagName('yt-player-error-message-renderer')[0]
+                                    container.insertAdjacentHTML('beforebegin', data);
+                                    overriddenVideo = document.getElementById('error-fake')
 
-                                let playerContent = document.createElement('yt-player-error-message-renderer')
-                                playerContent.className = 'style-scope yt-playability-error-supported-renderers'
-
-                                let errorFrame = window.document.createElement('div')
-                                errorFrame.setAttribute('id', 'info')
-                                errorFrame.className = 'style-scope yt-player-error-message-renderer'
-
-                                let errorReason = window.document.createElement('div')
-                                errorReason.setAttribute('id', 'reason')
-                                errorReason.className = 'style-scope yt-player-error-message-renderer'
-                                errorReason.innerHTML = 'Download server error'
-
-                                let errorSubReason = window.document.createElement('yt-formatted-string')
-                                errorSubReason.setAttribute('id', 'subreason')
-                                errorSubReason.className = 'style-scope yt-player-error-message-renderer'
-                                let errorSubReasonSpan = window.document.createElement('span')
-                                errorSubReasonSpan.setAttribute('dir', 'auto')
-                                errorSubReasonSpan.className = 'style-scope yt-formatted-string'
-                                errorSubReasonSpan.innerHTML = 'There was an error downloading the video from the server intended to bypass content restrictions, please check your URL is valid in the extension options and that the server is online.'
-
-                                container.appendChild(playerContent)
-                                playerContent.appendChild(errorFrame)
-                                errorFrame.appendChild(errorReason)
-                                errorFrame.appendChild(errorSubReason)
-                                errorSubReason.appendChild(errorSubReasonSpan)
-
-                                overriddenVideo = playerContent
+                                    removeLoadingPage()
+                                });
                             })
                         }
                     })
